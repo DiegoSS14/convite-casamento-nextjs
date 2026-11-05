@@ -1,26 +1,61 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-serif: var(--font-cormorant), "Times New Roman", Georgia, serif;
+  --font-sans: var(--font-montserrat), system-ui, -apple-system, sans-serif;
+  --font-script: var(--font-alex-brush), cursive;
+
+  --color-cream: #FAF7F2;
+  --color-cream-card: #FDFCFA;
+  --color-sand: #EFE9DF;
+  --color-sand-dark: #E2D7C7;
+  --color-taupe: #8A7B6E;
+  --color-taupe-light: #B8ACA0;
+  --color-gold: #B6986F;
+  --color-gold-light: #DFD3C3;
+  --color-charcoal: #2F2A26;
+  --color-charcoal-soft: #5C544E;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: var(--color-charcoal);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom delicate styling */
+.font-serif-custom {
+  font-family: var(--font-cormorant), "Times New Roman", Georgia, serif;
+}
+
+.font-script-custom {
+  font-family: var(--font-alex-brush), cursive;
+}
+
+.font-sans-custom {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+/* Subtle paper texture overlay */
+.paper-texture {
+  background-color: #FAF7F2;
+  background-image: radial-gradient(rgba(182, 152, 111, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8CFBE;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B6986F;
 }
