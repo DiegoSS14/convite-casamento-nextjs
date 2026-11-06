@@ -9,6 +9,8 @@ export class MockWeddingRepository implements IWeddingRepository {
       groomName: "Diego",
       brideInitial: "K",
       groomInitial: "D",
+      groomPhone: "5561994569910",
+      bridePhone: "5561993679599",
       weddingQuote: "Um dia para celebrar o amor, a alegria e a vida juntos ao lado de quem amamos.",
       songTitle: "All of Me",
       songArtist: "John Legend",

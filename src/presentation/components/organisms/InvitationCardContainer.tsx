@@ -87,6 +87,7 @@ export const InvitationCardContainer: React.FC = () => {
         isOpen={isRsvpOpen}
         onClose={() => setIsRsvpOpen(false)}
         guest={guest}
+        couple={couple}
         coupleNames={`${couple.brideName} & ${couple.groomName}`}
       />
     </div>
