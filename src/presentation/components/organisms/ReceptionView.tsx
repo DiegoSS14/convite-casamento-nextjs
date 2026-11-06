@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Couple } from "@/domain/models/Couple";
 import { WeddingEvent } from "@/domain/models/WeddingEvent";
+import { Guest } from "@/domain/models/Guest";
 import { Monogram } from "../atoms/Monogram";
 import { CeremonyCard } from "../molecules/CeremonyCard";
 import { ReceptionCard } from "../molecules/ReceptionCard";
@@ -16,6 +17,7 @@ import { ArrowLeft, CheckCircle2 } from "lucide-react";
 interface ReceptionViewProps {
   couple: Couple;
   event: WeddingEvent;
+  guest?: Guest;
   onBackToHome: () => void;
   onOpenRsvp: () => void;
 }
@@ -23,6 +25,7 @@ interface ReceptionViewProps {
 export const ReceptionView: React.FC<ReceptionViewProps> = ({
   couple,
   event,
+  guest,
   onBackToHome,
   onOpenRsvp,
 }) => {
@@ -64,7 +67,7 @@ export const ReceptionView: React.FC<ReceptionViewProps> = ({
 
       {/* 4. Agradecimento por Aceitar o Convite (Requested explicitly by user) */}
       <div className="w-full">
-        <GratitudeCard message={event.gratitudeMessage} />
+        <GratitudeCard message={event.gratitudeMessage} isPlural={guest?.isPlural} />
       </div>
 
       {/* 5. Cronograma (Timeline from Image 2) */}

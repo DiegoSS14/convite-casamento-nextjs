@@ -39,9 +39,15 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
 
     // Optional: Could open WhatsApp with prefilled message
     setTimeout(() => {
-      const message = attending === "yes"
-        ? `Olá! Confirmo com muita alegria minha presença no casamento de ${coupleNames}! Convidado: ${guestName || "Convidado"}, Acompanhantes: ${companions}.`
-        : `Olá! Infelizmente não poderei comparecer ao casamento de ${coupleNames}, mas agradeço imensamente pelo carinho do convite! Com carinho, ${guestName || "Convidado"}.`;
+      const defaultName = guest.isPlural ? "Convidados" : "Convidado";
+      const message =
+        attending === "yes"
+          ? (guest.isPlural
+            ? `Olá! Confirmamos com muita alegria nossa presença no casamento de ${coupleNames}! Convidados: ${guestName || defaultName}, Acompanhantes: ${companions}.`
+            : `Olá! Confirmo com muita alegria minha presença no casamento de ${coupleNames}! Convidado: ${guestName || defaultName}, Acompanhantes: ${companions}.`)
+          : (guest.isPlural
+            ? `Olá! Infelizmente não poderemos comparecer ao casamento de ${coupleNames}, mas agradecemos imensamente pelo carinho do convite! Com carinho, ${guestName || defaultName}.`
+            : `Olá! Infelizmente não poderei comparecer ao casamento de ${coupleNames}, mas agradeço imensamente pelo carinho do convite! Com carinho, ${guestName || defaultName}.`);
 
       const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, "_blank");
@@ -86,50 +92,50 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                     Confirmar Presença
                   </h3>
                   <p className="mt-1 text-xs text-[#7A6B5C]">
-                    Por favor, confirme se você estará presente em nossa celebração.
+                    {guest.isPlural
+                      ? "Por favor, confirmem se vocês estarão presentes em nossa celebração."
+                      : "Por favor, confirme se você estará presente em nossa celebração."}
                   </p>
                 </div>
 
                 <div>
                   <label className="block text-xs font-sans-custom uppercase tracking-wider text-[#5A4F44] mb-1.5">
-                    Nome Completo
+                    {guest.isPlural ? "Nome Completo / Convidados" : "Nome Completo"}
                   </label>
                   <input
                     type="text"
                     required
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
-                    placeholder="Seu nome"
+                    placeholder={guest.isPlural ? "Seus nomes" : "Seu nome"}
                     className="w-full px-3.5 py-2.5 bg-white border border-[#DDD4C7] rounded-md text-sm text-[#332B25] focus:outline-none focus:border-[#B6986F] transition-colors"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-sans-custom uppercase tracking-wider text-[#5A4F44] mb-1.5">
-                    Você comparecerá?
+                    {guest.isPlural ? "Vocês comparecerão?" : "Você comparecerá?"}
                   </label>
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
                       onClick={() => setAttending("yes")}
-                      className={`py-2 px-3 rounded-md text-xs font-medium tracking-wider uppercase border transition-all ${
-                        attending === "yes"
+                      className={`py-2 px-3 rounded-md text-xs font-medium tracking-wider uppercase border transition-all ${attending === "yes"
                           ? "bg-[#3D352E] text-[#FAF7F2] border-[#3D352E]"
                           : "bg-white text-[#5A4F44] border-[#DDD4C7] hover:bg-[#F2ECE3]"
-                      }`}
+                        }`}
                     >
                       Sim, com certeza!
                     </button>
                     <button
                       type="button"
                       onClick={() => setAttending("no")}
-                      className={`py-2 px-3 rounded-md text-xs font-medium tracking-wider uppercase border transition-all ${
-                        attending === "no"
+                      className={`py-2 px-3 rounded-md text-xs font-medium tracking-wider uppercase border transition-all ${attending === "no"
                           ? "bg-[#3D352E] text-[#FAF7F2] border-[#3D352E]"
                           : "bg-white text-[#5A4F44] border-[#DDD4C7] hover:bg-[#F2ECE3]"
-                      }`}
+                        }`}
                     >
-                      Não poderei ir
+                      {guest.isPlural ? "Não poderemos ir" : "Não poderei ir"}
                     </button>
                   </div>
                 </div>
@@ -144,7 +150,9 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                       onChange={(e) => setCompanions(e.target.value)}
                       className="w-full px-3.5 py-2.5 bg-white border border-[#DDD4C7] rounded-md text-sm text-[#332B25] focus:outline-none focus:border-[#B6986F] transition-colors"
                     >
-                      <option value="0">Apenas eu (0 acompanhantes)</option>
+                      <option value="0">
+                        {guest.isPlural ? "Apenas nós (0 acompanhantes adicionais)" : "Apenas eu (0 acompanhantes)"}
+                      </option>
                       <option value="1">1 acompanhante</option>
                       <option value="2">2 acompanhantes</option>
                       <option value="3">3 acompanhantes</option>
@@ -169,7 +177,9 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                   Confirmação Registrada!
                 </h3>
                 <p className="text-xs text-[#7A6B5C] max-w-xs mx-auto">
-                  Redirecionando para envio pelo WhatsApp... Muito obrigado pela sua resposta!
+                  {guest.isPlural
+                    ? "Redirecionando para envio pelo WhatsApp... Muito obrigado pela resposta de vocês!"
+                    : "Redirecionando para envio pelo WhatsApp... Muito obrigado pela sua resposta!"}
                 </p>
               </div>
             )}

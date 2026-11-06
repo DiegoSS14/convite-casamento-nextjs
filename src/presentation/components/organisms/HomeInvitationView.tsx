@@ -10,7 +10,6 @@ import { CoupleHeader } from "../molecules/CoupleHeader";
 import { EventDateBadge } from "../molecules/EventDateBadge";
 import { PhotoFrame } from "../molecules/PhotoFrame";
 import { GuestInvitationCard } from "../molecules/GuestInvitationCard";
-import { SongSection } from "../molecules/SongSection";
 import { ActionButton } from "../atoms/ActionButton";
 import { MapPin, CalendarHeart } from "lucide-react";
 
@@ -59,23 +58,37 @@ export const HomeInvitationView: React.FC<HomeInvitationViewProps> = ({
         year={event.year}
       />
 
-      {/* 4. Photo Frame with subtle feather fade */}
-      <PhotoFrame
-        photoUrl={couple.photoUrl}
-        alt={`Foto de ${couple.brideName} e ${couple.groomName}`}
-      />
+      {/* Ceremony Venue Highlight */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="text-center px-4 py-3 rounded-xl bg-[#FAF7F2] border border-[#E8DFCFC0] max-w-sm w-full mx-auto"
+      >
+        <div className="flex items-center justify-center gap-1.5 text-xs font-serif-custom tracking-[0.2em] text-[#332B25] uppercase font-medium">
+          <MapPin className="w-3.5 h-3.5 text-[#B6986F]" />
+          <span>{event.ceremony.venueName}</span>
+        </div>
+        <p className="text-[11px] font-sans-custom text-[#7A7067] tracking-wider mt-1">
+          {event.ceremony.address}
+        </p>
+        <p className="text-[11px] font-sans-custom tracking-widest text-[#8F7E6D] uppercase mt-1 font-medium">
+          Às {event.ceremony.time}
+        </p>
+      </motion.div>
+
+      {/* 4. Photo Frame (shown only when photoUrl is present) */}
+      {couple.photoUrl && (
+        <PhotoFrame
+          photoUrl={couple.photoUrl}
+          alt={`Foto de ${couple.brideName} e ${couple.groomName}`}
+        />
+      )}
 
       {/* 5. Personalized Guest Invitation Text */}
       <GuestInvitationCard
         guest={guest}
         weddingQuote={couple.weddingQuote}
-      />
-
-      {/* 6. Special Song Section */}
-      <SongSection
-        title={couple.songTitle}
-        artist={couple.songArtist}
-        className="pt-2"
       />
 
       {/* Interactive Quick Links */}

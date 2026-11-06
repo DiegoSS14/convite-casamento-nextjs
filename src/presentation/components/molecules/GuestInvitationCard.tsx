@@ -32,7 +32,9 @@ export const GuestInvitationCard: React.FC<GuestInvitationCardProps> = ({
       <div className="relative p-5 rounded-lg bg-[#F7F2E9]/70 border border-[#E5DDD1] shadow-xs">
         <div className="flex items-center justify-center gap-1.5 text-[10px] tracking-[0.25em] text-[#8F7E6D] uppercase mb-1.5">
           <Heart className="w-3 h-3 text-[#B6986F] fill-[#B6986F]/30" />
-          <span>Convite Especial Para</span>
+          <span>
+            {guest.isPlural ? "Convite Especial Para Vocês" : "Convite Especial Para"}
+          </span>
           <Heart className="w-3 h-3 text-[#B6986F] fill-[#B6986F]/30" />
         </div>
 
@@ -46,7 +48,7 @@ export const GuestInvitationCard: React.FC<GuestInvitationCardProps> = ({
 
         {guest.isGeneric && (
           <div className="mt-3 pt-2.5 border-t border-[#E8DFD3] text-[10px] text-[#9E9084] font-sans-custom">
-            Dica: Adicione <code className="bg-[#EFE9DF] px-1 py-0.5 rounded text-[#5A5046]">?convidado=Nome</code> na URL para personalizar para cada convidado.
+            Dica: Adicione <code className="bg-[#EFE9DF] px-1 py-0.5 rounded text-[#5A5046]">?convidado=Nome</code> na URL para personalizar para cada convidado (ou <code className="bg-[#EFE9DF] px-1 py-0.5 rounded text-[#5A5046]">&plural=true</code> para convites no plural).
           </div>
         )}
       </div>

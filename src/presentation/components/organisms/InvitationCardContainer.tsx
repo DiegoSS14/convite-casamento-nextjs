@@ -10,8 +10,8 @@ import { ReceptionView } from "./ReceptionView";
 import { RsvpModal } from "./RsvpModal";
 
 export const InvitationCardContainer: React.FC = () => {
-  const { data, loading } = useWeddingData();
   const guest = useGuestParam();
+  const { data, loading } = useWeddingData(guest.isPlural);
   const [activeTab, setActiveTab] = useState<ActiveTab>("home");
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
 
@@ -67,6 +67,7 @@ export const InvitationCardContainer: React.FC = () => {
               key="reception-view"
               couple={couple}
               event={event}
+              guest={guest}
               onBackToHome={() => handleTabChange("home")}
               onOpenRsvp={() => setIsRsvpOpen(true)}
             />

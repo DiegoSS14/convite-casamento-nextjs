@@ -1,20 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { WeddingDetailsDTO, GetWeddingDetailsUseCase } from "../use-cases/GetWeddingDetailsUseCase";
-import { weddingRepository } from "@/infrastructure/repositories/MockWeddingRepository";
+import { useMemo } from "react";
+import { MockWeddingRepository } from "@/infrastructure/repositories/MockWeddingRepository";
+import { WeddingDetailsDTO } from "../use-cases/GetWeddingDetailsUseCase";
 
-export function useWeddingData() {
-  const [data, setData] = useState<WeddingDetailsDTO | null>(null);
-  const [loading, setLoading] = useState(true);
+  export function useWeddingData(isPlural: boolean = false): { data: WeddingDetailsDTO; loading: boolean } {
+    const repo = useMemo(() => new MockWeddingRepository(), []);
+    const data: WeddingDetailsDTO = useMemo(
+      () => ({
+        couple: repo.getCoupleSync(),
+        event: repo.getWeddingEventSync(isPlural),
+      }),
+      [repo, isPlural]
+    );
 
-  useEffect(() => {
-    const useCase = new GetWeddingDetailsUseCase(weddingRepository);
-    useCase.execute().then((result) => {
-      setData(result);
-      setLoading(false);
-    });
-  }, []);
-
-  return { data, loading };
-}
+    return { data, loading: false };
+  }

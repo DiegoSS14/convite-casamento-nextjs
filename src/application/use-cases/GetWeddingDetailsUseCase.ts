@@ -8,14 +8,14 @@ export interface WeddingDetailsDTO {
 }
 
 export class GetWeddingDetailsUseCase {
-  constructor(private readonly repository: IWeddingRepository) {}
+  constructor(private readonly repository: IWeddingRepository) { }
 
-  async execute(): Promise<WeddingDetailsDTO> {
-    const [couple, event] = await Promise.all([
-      this.repository.getCouple(),
-      this.repository.getWeddingEvent(),
-    ]);
+  async execute(isPlural: boolean = false): Promise < WeddingDetailsDTO > {
+      const [couple, event] = await Promise.all([
+        this.repository.getCouple(),
+        this.repository.getWeddingEvent(isPlural),
+      ]);
 
-    return { couple, event };
+      return { couple, event };
+    }
   }
-}

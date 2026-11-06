@@ -7,11 +7,13 @@ import { BotanicalDivider } from "../atoms/BotanicalDivider";
 
 interface GratitudeCardProps {
   message: string;
+  isPlural?: boolean;
   className?: string;
 }
 
 export const GratitudeCard: React.FC<GratitudeCardProps> = ({
   message,
+  isPlural = false,
   className = "",
 }) => {
   return (
@@ -27,7 +29,7 @@ export const GratitudeCard: React.FC<GratitudeCardProps> = ({
       </div>
 
       <h4 className="font-serif-custom text-lg sm:text-xl tracking-[0.18em] text-[#3D352E] uppercase font-normal">
-        Obrigado por Fazer Parte
+        {isPlural ? "Obrigado por Fazerem Parte" : "Obrigado por Fazer Parte"}
       </h4>
 
       <p className="mt-3 text-xs sm:text-sm font-serif-custom italic text-[#63574B] leading-relaxed max-w-sm mx-auto">

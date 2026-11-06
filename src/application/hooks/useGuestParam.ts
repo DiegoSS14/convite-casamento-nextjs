@@ -17,6 +17,27 @@ export function useGuestParam(): Guest {
       searchParams.get("nome") ||
       searchParams.get("guest");
 
-    return guestUseCase.execute(guestQuery);
+    // Checks for plural flag: ?plural=true, ?plural=1, ?plural=sim, ?plural (key with no value), ?plurais, ?casal, ?familia, ?pl, etc.
+    const checkBooleanFlag = (key: string): boolean => {
+      if (!searchParams.has(key)) return false;
+      const val = searchParams.get(key)?.toLowerCase().trim();
+      if (val === "" || val === null || val === undefined) return true;
+      if (val === "false" || val === "0" || val === "nao" || val === "não") return false;
+      return val === "true" || val === "1" || val === "sim" || val === "s" || val === "yes";
+    };
+
+    const tipo = searchParams.get("tipo")?.toLowerCase().trim();
+    const isPluralType = tipo === "plural" || tipo === "casal" || tipo === "familia";
+
+    const isPlural =
+      isPluralType ||
+      checkBooleanFlag("plural") ||
+      checkBooleanFlag("plurais") ||
+      checkBooleanFlag("casal") ||
+      checkBooleanFlag("familia") ||
+      checkBooleanFlag("pl") ||
+      (searchParams.get("p") === "1" || searchParams.get("p")?.toLowerCase() === "true");
+
+    return guestUseCase.execute(guestQuery, isPlural);
   }, [searchParams, guestUseCase]);
 }
