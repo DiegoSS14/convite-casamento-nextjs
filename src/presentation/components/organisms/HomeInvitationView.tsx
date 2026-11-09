@@ -58,7 +58,7 @@ export const HomeInvitationView: React.FC<HomeInvitationViewProps> = ({
         year={event.year}
       />
 
-      {/* Ceremony Venue Highlight */}
+      {/* Venue Highlight: Ceremony (if named) or Reception (if generic) */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -67,13 +67,13 @@ export const HomeInvitationView: React.FC<HomeInvitationViewProps> = ({
       >
         <div className="flex items-center justify-center gap-1.5 text-xs font-serif-custom tracking-[0.2em] text-[#332B25] uppercase font-medium">
           <MapPin className="w-3.5 h-3.5 text-[#B6986F]" />
-          <span>{event.ceremony.venueName}</span>
+          <span>{guest.isGeneric ? event.reception.venueName : event.ceremony.venueName}</span>
         </div>
         <p className="text-[11px] font-sans-custom text-[#7A7067] tracking-wider mt-1">
-          {event.ceremony.address}
+          {guest.isGeneric ? event.reception.address : event.ceremony.address}
         </p>
         <p className="text-[11px] font-sans-custom tracking-widest text-[#8F7E6D] uppercase mt-1 font-medium">
-          Às {event.ceremony.time}
+          Às {guest.isGeneric ? event.reception.time : event.ceremony.time}
         </p>
       </motion.div>
 
@@ -94,7 +94,7 @@ export const HomeInvitationView: React.FC<HomeInvitationViewProps> = ({
       {/* Interactive Quick Links */}
       <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 pb-12 w-full justify-center">
         <ActionButton
-          label="Detalhes da Cerimônia"
+          label={guest.isGeneric ? "Detalhes da Recepção" : "Detalhes da Cerimônia"}
           onClick={onNavigateToReception}
           variant="outline"
           icon={<MapPin className="w-3.5 h-3.5" />}

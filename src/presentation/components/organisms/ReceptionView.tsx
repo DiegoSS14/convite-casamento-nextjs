@@ -51,17 +51,19 @@ export const ReceptionView: React.FC<ReceptionViewProps> = ({
           {couple.brideName} & {couple.groomName}
         </p>
         <h2 className="font-serif-custom text-2xl sm:text-3xl tracking-[0.16em] text-[#332B25] uppercase mt-1">
-          Locais & Celebração
+          {guest?.isGeneric ? "Local & Celebração" : "Locais & Celebração"}
         </h2>
       </div>
 
-      {/* 2. Cerimônia Details (Image 2 style) */}
-      <div className="w-full border-t border-b border-[#E8DFCFC0] py-4">
-        <CeremonyCard ceremony={event.ceremony} />
-      </div>
+      {/* 2. Cerimônia Details (Image 2 style) - Only for named guests */}
+      {!guest?.isGeneric && (
+        <div className="w-full border-t border-b border-[#E8DFCFC0] py-4">
+          <CeremonyCard ceremony={event.ceremony} />
+        </div>
+      )}
 
       {/* 3. Recepção Details (Requested explicitly by user) */}
-      <div className="w-full border-b border-[#E8DFCFC0] pb-6">
+      <div className={`w-full border-b border-[#E8DFCFC0] pb-6 ${guest?.isGeneric ? "border-t pt-4" : ""}`}>
         <ReceptionCard reception={event.reception} />
       </div>
 
@@ -72,7 +74,13 @@ export const ReceptionView: React.FC<ReceptionViewProps> = ({
 
       {/* 5. Cronograma (Timeline from Image 2) */}
       <div className="w-full border-b border-[#E8DFCFC0] pb-6">
-        <TimelineSchedule items={event.timeline} />
+        <TimelineSchedule
+          items={
+            guest?.isGeneric
+              ? event.timeline.filter((item) => item.iconType !== "church")
+              : event.timeline
+          }
+        />
       </div>
 
       {/* 6. Dress Code & Palette (From Image 2) */}
